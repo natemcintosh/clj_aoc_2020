@@ -65,8 +65,9 @@
   [input]
   (let [h (:hgt input)
         last-char (last h)
+        num-chars #{\0 \1 \2 \3 \4 \5 \6 \7 \8 \9}
         n (Integer/parseUnsignedInt
-           (apply str (reverse (nthrest (reverse h) 2))))]
+           (apply str (take-while #(contains? num-chars %) h)))]
     (or
      (and (= \m last-char) (>= n 150) (<= n 2030))
      (and (= \n last-char) (>= n 59)  (<= n 76))
