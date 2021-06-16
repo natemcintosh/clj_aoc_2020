@@ -7,6 +7,9 @@
 
   :day02 {:exec-fn day02/run
           :exec-args {}}
+  
+  :day04 {:exec-fn day04/run
+          :exec-args {}}
 
   :test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner
