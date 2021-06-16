@@ -1,9 +1,5 @@
 (ns day02
-  (:require [clojure.string :as str]
-            [clojure.spec.alpha :as s]
-            [clojure.spec.gen.alpha :as gen]
-            [clojure.pprint :as pp]
-            [clojure.spec.test.alpha :as stest]))
+  (:require [clojure.string :as str]))
 
 
 (defn count-in-coll
@@ -15,27 +11,16 @@
 (defn create-day2-rule
   "parse a single line from day 2 input into a map"
   [line]
-  (let [values (-> line
-                   (str/replace "-" " ")
-                   (str/replace ":" "")
-                   (str/split #" "))
-        starting_map (zipmap [::lbound ::ubound ::key ::pw] values)]
+  (let [values       (-> line
+                         (str/replace "-" " ")
+                         (str/replace ":" "")
+                         (str/split #" "))
+        starting_map (zipmap [:lbound :ubound :key :pw] values)]
+
     (-> starting_map
-        (update ::lbound #(Integer/parseUnsignedInt %))
-        (update ::ubound #(Integer/parseUnsignedInt %))
-        (update ::key first))))
-
-
-;; (s/def ::lbound int?)
-;; (s/def ::ubound int?)
-;; (s/def ::key    char?)
-;; (s/def ::pw     string?)
-;; (s/def ::day02-rule
-;;   (s/keys
-;;    :req [::lbound ::ubound ::key ::pw]))
-;; (s/fdef create-day2-rule
-;;   :args (s/cat ::line string?)
-;;   :ret  ::day02-rule)
+        (update :lbound #(Integer/parseUnsignedInt %))
+        (update :ubound #(Integer/parseUnsignedInt %))
+        (update :key    first))))
 
 
 (defn parse-input
@@ -56,22 +41,18 @@
 
 (defn count-key-matches-bounds
   [m]
-  [(= (:key m) (nth (:pw m) (- (:lbound m) 1)))
-   (= (:key m) (nth (:pw m) (- (:ubound m) 1)))])
+  (count
+   (filter identity
+           [(= (:key m) (nth (:pw m) (- (:lbound m) 1)))
+            (= (:key m) (nth (:pw m) (- (:ubound m) 1)))])))
 
 
 (defn part2
   [input]
-  (->> input
-       (filter #(= 1 (count (filter identity (count-key-matches-bounds %)))))
-       count))
-
-;; (defn part2
-;;   [input]
-;;   (count
-;;    (filter
-;;     #(= 1 (count (filter identity (count-key-matches-bounds %))))
-;;     input)))
+  (count
+   (filter
+    #(= 1 (count-key-matches-bounds %))
+    input)))
 
 
 (defn run [opts]
