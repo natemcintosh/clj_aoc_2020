@@ -5,7 +5,15 @@
 (defn try-parse-int
   [i]
   (try (Integer/parseUnsignedInt i)
-       (catch Exception _ (identity i))))
+       (catch Exception _ i)))
+
+(defn parse-pairs
+  [kv-str]
+  (let [k (first kv-str)
+        v (last kv-str)]
+    (if (= "pid" k)
+      v
+      (try-parse-int v))))
 
 (defn parse-passport-str
   [line]
@@ -14,10 +22,10 @@
                     (str/split #"\s+"))
         ps      (map #(str/split % #":") kv-strs)
         ks      (map (comp keyword first) ps)
-        vs      (map (comp try-parse-int second) ps)]
+        vs      (map parse-pairs ps)]
     (zipmap ks vs)))
 
-(defn parse-input-file
+(defn parse-input-file-part-1
   [fname]
   (mapv
    parse-passport-str
@@ -70,9 +78,43 @@
            (apply str (take-while #(contains? num-chars %) h)))]
     (or
      (and (= \m last-char) (>= n 150) (<= n 2030))
-     (and (= \n last-char) (>= n 59)  (<= n 76))
-     false)))
+     (and (= \n last-char) (>= n 59)  (<= n 76)))))
+
+
+(defn hcl?
+  [input]
+  (let [h (:hcl input)
+        hair-chars (rest h)
+        valid-chars #{\0 \1 \2 \3 \4 \5 \6 \7 \8 \9 \a \b \c \d \e \f}]
+    (and
+     (= \# (first h))
+     (every? #(contains? valid-chars %) hair-chars))))
+
+
+(defn ecl?
+  [input]
+  (contains? #{"amb" "blu" "brn" "gry" "grn" "hzl" "oth"} (:ecl input)))
+
+(defn pid?
+  [input]
+  (let [p (:pid input)
+        num-chars #{\0 \1 \2 \3 \4 \5 \6 \7 \8 \9}]
+    (and
+     (= 9 (count p))
+     (every? #(contains? num-chars %) p))))
+
+(defn part2
+  [input-str]
+  (let [passport-strs (str/split input-str #"\n\n")
+        passports (mapv parse-passport-str passport-strs)]
+    (count 
+     (filter 
+      #(every-pred byr? iyr? eyr? hgt? hcl? ecl? pid?) 
+      passports))))
+
 
 (defn run [opts]
-  (let [input (parse-input-file "/Users/mcintna1/dev/clj_aoc_2020/inputs/day04.txt")]
-    (println "day 04 part 1: " (part1 input))))
+  (let [input-1 (parse-input-file-part-1 "./inputs/day04.txt")
+        input-2 (slurp "./inputs/day04.txt")]
+    (println "day 04 part 1: " (part1 input-1))
+    (println "day 04 part 2: " (part1 input-2))))

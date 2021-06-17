@@ -9,15 +9,15 @@
 
 (defn part1
   [input]
-  (let [nums (filter #(= 2020 (apply + %)) (combo/combinations input 2))]
+  (let [nums (filter #(= 2020 (apply +' %)) (combo/combinations input 2))]
     (reduce *' (nth nums 0))))
 
 (defn part2
   [input]
-  (let [nums (filter #(= 2020 (apply + %)) (combo/combinations input 3))]
+  (let [nums (filter #(= 2020 (apply +' %)) (combo/combinations input 3))]
     (reduce *' (nth nums 0))))
 
 (defn run [opts]
-  (let [input (parse-input "/Users/mcintna1/dev/aoc_2020/inputs/day01.txt")]
+  (let [input (parse-input "./inputs/day01.txt")]
     (println "day 01 part 1: " (part1 input))
     (println "day 01 part 2: " (part2 input))))

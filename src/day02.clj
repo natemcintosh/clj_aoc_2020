@@ -56,6 +56,6 @@
 
 
 (defn run [opts]
-  (let [input (parse-input "/Users/mcintna1/dev/aoc_2020/inputs/day02.txt")]
+  (let [input (parse-input "./inputs/day02.txt")]
     (println "day 02 part 1: " (part1 input))
     (println "day 02 part 2: " (part2 input))))
