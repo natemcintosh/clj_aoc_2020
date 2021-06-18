@@ -11,7 +11,7 @@
   [kv-str]
   (let [k (first kv-str)
         v (last kv-str)]
-    (if (= "pid" k)
+    (if (or (= "pid" k) (= "hgt" k))
       v
       (try-parse-int v))))
 
@@ -103,13 +103,22 @@
      (= 9 (count p))
      (every? #(contains? num-chars %) p))))
 
+
+(defn passes-part-2?
+  [input]
+  (let [has-all-keys ((every-pred :byr :iyr :eyr :hgt :hcl :ecl :pid) input)]
+    (if has-all-keys
+      ((every-pred :byr :iyr :eyr :hgt :hcl :ecl :pid) input)
+      false)))
+
+
 (defn part2
   [input-str]
   (let [passport-strs (str/split input-str #"\n\n")
         passports (mapv parse-passport-str passport-strs)]
-    (count 
-     (filter 
-      #(every-pred byr? iyr? eyr? hgt? hcl? ecl? pid?) 
+    (count
+     (filter
+      passes-part-2?
       passports))))
 
 
@@ -117,4 +126,4 @@
   (let [input-1 (parse-input-file-part-1 "./inputs/day04.txt")
         input-2 (slurp "./inputs/day04.txt")]
     (println "day 04 part 1: " (part1 input-1))
-    (println "day 04 part 2: " (part1 input-2))))
+    (println "day 04 part 2: " (part2 input-2))))

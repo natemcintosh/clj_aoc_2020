@@ -93,7 +93,14 @@ eyr:2022"
     (t/is (= false  (day04/ecl? ecl-invalid)))
     (t/is (= true   (day04/pid? pid-valid)))
     (t/is (= false  (day04/pid? pid-invalid)))
-    (t/is (= false  (day04/part2 invalid-p1)))))
+    (t/is (= false  (day04/passes-part-2? (day04/parse-passport-str invalid-p1))))
+    (t/is (= false  (day04/passes-part-2? (day04/parse-passport-str invalid-p2))))
+    (t/is (= false  (day04/passes-part-2? (day04/parse-passport-str invalid-p3))))
+    (t/is (= false  (day04/passes-part-2? (day04/parse-passport-str invalid-p4))))
+    (t/is (= true  (day04/passes-part-2?  (day04/parse-passport-str valid-p1))))
+    (t/is (= true  (day04/passes-part-2?  (day04/parse-passport-str valid-p2))))
+    (t/is (= true  (day04/passes-part-2?  (day04/parse-passport-str valid-p3))))
+    (t/is (= true  (day04/passes-part-2?  (day04/parse-passport-str valid-p4))))))
 
 
 
