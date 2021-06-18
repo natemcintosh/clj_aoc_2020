@@ -11,7 +11,7 @@
   [kv-str]
   (let [k (first kv-str)
         v (last kv-str)]
-    (if (or (= "pid" k) (= "hgt" k))
+    (if (contains? #{"pid" "hgt" "hcl"} k)
       v
       (try-parse-int v))))
 
@@ -108,7 +108,7 @@
   [input]
   (let [has-all-keys ((every-pred :byr :iyr :eyr :hgt :hcl :ecl :pid) input)]
     (if has-all-keys
-      ((every-pred :byr :iyr :eyr :hgt :hcl :ecl :pid) input)
+      ((every-pred byr? iyr? eyr? hgt? hcl? ecl? pid?) input)
       false)))
 
 
