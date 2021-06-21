@@ -20,7 +20,7 @@
     curr-idx       0
     seen-idx ^ints #{}]
     (if (contains? seen-idx curr-idx)
-      {:acc accumulator, :code code-vec}
+      accumulator
       ;; And here we need to update that we visited, and then update curr-idx
       (case ((code-vec curr-idx) :instr)
         ;; The acc command
@@ -46,7 +46,7 @@
 
 (defn part1
   [code-vec]
-  (get (main-loop code-vec) :acc))
+  (main-loop code-vec))
 
 (defn run [opts]
   (let [code-vec (parse-input-str (slurp "./inputs/day08.txt"))]
