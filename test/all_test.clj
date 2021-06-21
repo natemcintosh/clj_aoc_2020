@@ -2,7 +2,8 @@
   (:require [clojure.test :as t]
             [day01]
             [day02]
-            [day04]))
+            [day04]
+            [day06]))
 
 (t/deftest day01
   (let [d [1721 979 366 299 675 1456]]
@@ -102,6 +103,24 @@ eyr:2022"
     (t/is (= true   (day04/passes-part-2? (day04/parse-passport-str valid-p3))))
     (t/is (= true   (day04/passes-part-2? (day04/parse-passport-str valid-p4))))))
 
+(t/deftest day06
+  (let [d "abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b"]
+    (t/is (= 11 (day06/part1 (day06/get-sets-of-answers d))))
+    (t/is (= 6  (day06/part2 d)))))
 
 
 
