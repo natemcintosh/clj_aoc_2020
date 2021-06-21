@@ -4,7 +4,7 @@
 
 (defn get-sets-of-answers
   [input-str]
-  (let [chunks (str/split input-str #"\n\n")
+  (let [chunks   (str/split input-str #"\n\n")
         raw-strs (map #(str/replace % "\n" "") chunks)]
     (mapv #(into #{} %) raw-strs)))
 
@@ -14,10 +14,10 @@
 
 (defn part2
   [input-str]
-  (let [group-chunks (str/split input-str #"\n\n")
+  (let [group-chunks      (str/split input-str #"\n\n")
         individual-chunks (map #(str/split-lines %) group-chunks)
-        ind-sets (map #(map set %) individual-chunks)
-        yes-for-everyone (map #(apply set/intersection %) ind-sets)]
+        ind-sets          (map #(map set %) individual-chunks)
+        yes-for-everyone  (map #(apply set/intersection %) ind-sets)]
     (reduce +' (map count yes-for-everyone))))
 
 (defn run [opts]
