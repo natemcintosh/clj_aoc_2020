@@ -3,7 +3,8 @@
             [day01]
             [day02]
             [day04]
-            [day06]))
+            [day06]
+            [day08]))
 
 (t/deftest day01
   (let [d [1721 979 366 299 675 1456]]
@@ -122,9 +123,27 @@ b"]
     (t/is (= 11 (day06/part1 (day06/get-sets-of-answers d))))
     (t/is (= 6  (day06/part2 d)))))
 
-
-
-
-
-
-
+(t/deftest day08
+  (let [input-str "nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6"
+        parsed-input [{:instr :nop :arg 0}
+                      {:instr :acc :arg 1}
+                      {:instr :jmp :arg 4}
+                      {:instr :acc :arg 3}
+                      {:instr :jmp :arg -3}
+                      {:instr :acc :arg -99}
+                      {:instr :acc :arg 1}
+                      {:instr :jmp :arg -4}
+                      {:instr :acc :arg 6}]]
+    (t/testing "Correct parsing of input string"
+               (t/is (= parsed-input (day08/parse-input-str input-str))))
+    
+    (t/testing "Part 1 is correct"
+               (t/is (= 5 (day08/part1 parsed-input))))))
