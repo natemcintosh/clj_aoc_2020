@@ -40,11 +40,11 @@
 
 
 (defn count-key-matches-bounds
-  [m]
+  [{:keys [key pw lbound ubound]}]
   (count
    (filter identity
-           [(= (:key m) (nth (:pw m) (- (:lbound m) 1)))
-            (= (:key m) (nth (:pw m) (- (:ubound m) 1)))])))
+           [(= key (nth pw (- lbound 1)))
+            (= key (nth pw (- ubound 1)))])))
 
 
 (defn part2
