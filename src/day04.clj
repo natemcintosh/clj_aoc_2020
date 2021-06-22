@@ -46,28 +46,25 @@
        rseq))
 
 (defn byr?
-  [input]
-  (let [y (:byr input)]
-    (and
-     (>= y 1920)
-     (<= y 2002)
-     (= 4 (count (digits y))))))
+  [{y :byr}]
+  (and
+   (>= y 1920)
+   (<= y 2002)
+   (= 4 (count (digits y)))))
 
 (defn iyr?
-  [input]
-  (let [y (:iyr input)]
-    (and
-     (>= y 2010)
-     (<= y 2020)
-     (= 4 (count (digits y))))))
+  [{y :iyr}]
+  (and
+   (>= y 2010)
+   (<= y 2020)
+   (= 4 (count (digits y)))))
 
 (defn eyr?
-  [input]
-  (let [y (:eyr input)]
-    (and
-     (>= y 2020)
-     (<= y 2030)
-     (= 4 (count (digits y))))))
+  [{y :eyr}]
+  (and
+   (>= y 2020)
+   (<= y 2030)
+   (= 4 (count (digits y)))))
 
 (defn hgt?
   [input]
