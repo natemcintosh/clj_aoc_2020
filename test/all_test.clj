@@ -143,7 +143,10 @@ acc +6"
                       {:instr :jmp :arg -4}
                       {:instr :acc :arg 6}]]
     (t/testing "Correct parsing of input string"
-               (t/is (= parsed-input (day08/parse-input-str input-str))))
-    
+      (t/is (= parsed-input (day08/parse-input-str input-str))))
+
     (t/testing "Part 1 is correct"
-               (t/is (= 5 (day08/part1 parsed-input))))))
+      (t/is (= 5 (day08/part1 parsed-input))))
+
+    (t/testing "Part 2 is correct"
+      (t/is (= 8 (day08/part2 parsed-input))))))
