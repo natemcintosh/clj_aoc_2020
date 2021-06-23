@@ -4,7 +4,8 @@
             [day02]
             [day04]
             [day06]
-            [day08]))
+            [day08]
+            [day17]))
 
 (t/deftest day01
   (let [d [1721 979 366 299 675 1456]]
@@ -150,3 +151,52 @@ acc +6"
 
     (t/testing "Part 2 is correct"
       (t/is (= 8 (day08/part2 parsed-input))))))
+
+(t/deftest day17
+  (t/testing "Correct input parsing"
+    (let [input-str ".#.
+..#
+###"
+          parsed-input [[0 1] [1 2] [2 0] [2 1] [2 2]]]
+      (t/is (= parsed-input (day17/parse-input-str input-str)))))
+
+  (t/testing "Can correctly count neighbors"
+    (let [pts1 #{[0 1] [1 0] [3 3] [100 0]}
+          pts2 #{[0 1] [1 0] [1 1] [3 3] [100 0]}
+          pts3 #{[3 3] [100 0]}
+          pts4 #{[1 1 1] [100 0 2]}
+          dirs2 (day17/gen-directions 2)
+          dirs3 (day17/gen-directions 3)]
+      (t/is (= 2 (day17/count-active-neighbors pts1 dirs2 [0 0])))
+      (t/is (= 3 (day17/count-active-neighbors pts2 dirs2 [0 0])))
+      (t/is (= 0 (day17/count-active-neighbors pts3 dirs2 [0 0])))
+      (t/is (= 1 (day17/count-active-neighbors pts4 dirs3 [0 0 0])))))
+
+  (t/testing "Can solve part 1"
+    (let [parsed-input [[0 1] [1 2] [2 0] [2 1] [2 2]]
+          d3 (day17/gen-directions 3)]
+      (t/is (= 11
+               (count (day17/solve (set (map
+                                  (partial day17/extend-dimensions-by-n 1)
+                                  parsed-input))
+                            d3
+                            1))))
+      (t/is (= 21
+               (count (day17/solve (set (map
+                                  (partial day17/extend-dimensions-by-n 1)
+                                  parsed-input))
+                            d3
+                            2))))
+      (t/is (= 38
+               (count (day17/solve (set (map
+                                  (partial day17/extend-dimensions-by-n 1)
+                                  parsed-input))
+                            d3
+                            3))))
+      (t/is (= 112
+               (count (day17/solve (set (map
+                                  (partial day17/extend-dimensions-by-n 1)
+                                  parsed-input))
+                            d3
+                            6)))))))
+
