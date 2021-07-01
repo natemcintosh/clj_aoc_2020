@@ -177,26 +177,40 @@ acc +6"
           d3 (day17/gen-directions 3)]
       (t/is (= 11
                (count (day17/solve (set (map
-                                  (partial day17/extend-dimensions-by-n 1)
-                                  parsed-input))
-                            d3
-                            1))))
+                                         (partial day17/extend-dimensions-by-n 1)
+                                         parsed-input))
+                                   d3
+                                   1))))
       (t/is (= 21
                (count (day17/solve (set (map
-                                  (partial day17/extend-dimensions-by-n 1)
-                                  parsed-input))
-                            d3
-                            2))))
+                                         (partial day17/extend-dimensions-by-n 1)
+                                         parsed-input))
+                                   d3
+                                   2))))
       (t/is (= 38
                (count (day17/solve (set (map
-                                  (partial day17/extend-dimensions-by-n 1)
-                                  parsed-input))
-                            d3
-                            3))))
+                                         (partial day17/extend-dimensions-by-n 1)
+                                         parsed-input))
+                                   d3
+                                   3))))
       (t/is (= 112
                (count (day17/solve (set (map
-                                  (partial day17/extend-dimensions-by-n 1)
-                                  parsed-input))
-                            d3
-                            6)))))))
+                                         (partial day17/extend-dimensions-by-n 1)
+                                         parsed-input))
+                                   d3
+                                   6)))))))
 
+(t/deftest day21
+  (t/testing "Correct parsing"
+    (let [input-str "mxmxvkd kfcds sqjhc nhms (contains dairy, fish)
+trh fvjkl sbzzf mxmxvkd (contains dairy)
+sqjhc fvjkl (contains soy)
+sqjhc mxmxvkd sbzzf (contains fish)"
+          parsed-input [{:ingredients #{"mxmxvkd" "kfcds" "sqjhc" "nhms"}
+                         :contains #{"dairy" "fish"}}
+                        {:ingredients #{"trh" "fvjkl" "sbzzf" "mxmxvkd"}
+                         :contains #{"dairy"}}
+                        {:ingredients #{"sqjhc" "fvjkl"}
+                         :contains #{"soy"}}
+                        {:ingredients #{"sqjhc" "mxmxvkd" "sbzzf"}
+                         :continue #{"fish"}}]])))
