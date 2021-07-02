@@ -5,7 +5,8 @@
             [day04]
             [day06]
             [day08]
-            [day17]))
+            [day17]
+            [day21]))
 
 (t/deftest day01
   (let [d [1721 979 366 299 675 1456]]
@@ -213,4 +214,5 @@ sqjhc mxmxvkd sbzzf (contains fish)"
                         {:ingredients #{"sqjhc" "fvjkl"}
                          :contains #{"soy"}}
                         {:ingredients #{"sqjhc" "mxmxvkd" "sbzzf"}
-                         :continue #{"fish"}}]])))
+                         :contains #{"fish"}}]]
+      (t/is (= parsed-input (day21/parse-input-str input-str))))))
